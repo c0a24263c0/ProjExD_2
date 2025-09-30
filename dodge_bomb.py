@@ -14,6 +14,21 @@ DELTA = {
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
+def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
+    """
+    引数:こうかとんRect or 爆弾Rect
+    戻り値:判定結果タプル（横方向、縦方向）
+    画面内ならTrue、画面街ならFalse
+    """
+    yoko, tate = True,True
+    if rct.left < 0 or WIDTH < rct.right:  # 横方向にはみ出ていたら
+        yoko = False
+    if rct.top < 0 or HEIGHT < rct.bottom:  # 縦方向にはみ出ていたら
+        tate = False
+    return yoko, tate
+
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -24,7 +39,7 @@ def main():
 
     bb_img = pg.Surface((20,20))  # 空のsurface
     pg.draw.circle(bb_img, (255,0,0), (10,10), 10)  # 赤い爆弾円
-    bb_img.set_colorkey((0,0,0))
+    bb_img.set_colorkey((0,0,0))  # 黒い部分を透過する
 
 
     bb_rct = bb_img.get_rect()  # 爆弾rect
@@ -58,12 +73,20 @@ def main():
         #     sum_mv[0] += 5
 
         kk_rct.move_ip(sum_mv)
-        bb_rct.move_ip(vx, vy)
+        if check_bound(kk_rct) != (True,True):
+            kk_rct.move_ip(-sum_mv[0],-sum_mv[1])
         screen.blit(kk_img, kk_rct)
+        bb_rct.move_ip(vx, vy)
+        yoko,tate = check_bound(bb_rct)
+        if not yoko:  # 横方向にはみ出ていたら
+            vx *= -1
+        if not tate:  # 縦方向にはみ出ていたら
+            vy *= -1
         screen.blit(bb_img, bb_rct)
         pg.display.update()
         tmr += 1
         clock.tick(50)
+
 
 
 if __name__ == "__main__":
