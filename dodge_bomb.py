@@ -1,5 +1,6 @@
 import os
 import random  # ランダムモジュール
+import time
 import sys
 import pygame as pg
 
@@ -26,6 +27,31 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     if rct.top < 0 or HEIGHT < rct.bottom:  # 縦方向にはみ出ていたら
         tate = False
     return yoko, tate
+
+
+
+def gameover(screen: pg.Surface) -> None:
+    go_img = pg.Surface((WIDTH,HEIGHT))  # 空のsurface
+    pg.draw.rect(go_img, (0,0,0),(0,0,WIDTH,HEIGHT))  # 黒い短径を描画
+    go_img.set_alpha(200)  # surfaceの透明度を設定
+    fonto = pg.font.Font(None, 50)
+
+    txt = fonto.render("Game Over",
+            True, (255,255,255))
+            # game overの表示
+    
+    txt_rct = txt.get_rect()
+    txt_rct.center = WIDTH/2, HEIGHT/2  # テキストの位置を中心に
+    
+    go_kk_img = pg.image.load("fig/8.png")  # こうかとんイメージの読み込み
+
+
+    screen.blit(go_img,[0,0])  # 黒い画像の表示
+    screen.blit(txt, txt_rct)  # game overを表示
+    screen.blit(go_kk_img,[400,290])  # こうかとんイメージの表示
+    screen.blit(go_kk_img,[650,290])
+    pg.display.update()
+    time.sleep(5)
 
 
 
@@ -57,6 +83,7 @@ def main():
         screen.blit(bg_img, [0, 0]) 
 
         if kk_rct.colliderect(bb_rct):  # こうかとんと爆弾の衝突判定
+            gameover(screen)  # ゲームオーバー画面の表示
             return  # ゲームオーバー
         
 
