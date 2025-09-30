@@ -56,6 +56,10 @@ def main():
                 return
         screen.blit(bg_img, [0, 0]) 
 
+        if kk_rct.colliderect(bb_rct):  # こうかとんと爆弾の衝突判定
+            return  # ゲームオーバー
+        
+
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
         for key, mv in DELTA.items():
