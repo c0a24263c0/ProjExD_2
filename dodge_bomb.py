@@ -32,7 +32,7 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
 
 def gameover(screen: pg.Surface) -> None:
     """
-    引数：スクリーンrct
+    引数：スクリーンsurface
     衝突したら「game over」を5秒間表示
     """
     go_img = pg.Surface((WIDTH,HEIGHT))  # 空のsurface
