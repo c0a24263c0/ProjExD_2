@@ -29,7 +29,6 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     return yoko, tate
 
 
-
 def gameover(screen: pg.Surface) -> None:
     """
     引数：スクリーンsurface
@@ -49,7 +48,6 @@ def gameover(screen: pg.Surface) -> None:
     
     go_kk_img = pg.image.load("fig/8.png")  # こうかとんイメージの読み込み
 
-
     screen.blit(go_img,[0,0])  # 黒い画像の表示
     screen.blit(txt, txt_rct)  # game overを表示
     screen.blit(go_kk_img,[400,290])  # こうかとんイメージの表示
@@ -57,7 +55,6 @@ def gameover(screen: pg.Surface) -> None:
     pg.display.update()
     time.sleep(5)
 
-    return
 
 def init_bb_imgs() ->tuple[list[pg.Surface], list[int]]:
     """
@@ -69,12 +66,9 @@ def init_bb_imgs() ->tuple[list[pg.Surface], list[int]]:
         pg.draw.circle(bb_img, (255,0,0), (10*r, 10*r), 10*r)  # 爆弾のサイズを大きく
         bb_imgs.append(bb_img)
         bb_img.set_colorkey((0,0,0))  # 黒い部分を透過する
-
-
     bb_accs = [a for a in range(1,11)]  # 加速度のリスト
-
-
     return bb_imgs, bb_accs
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -96,9 +90,8 @@ def main():
     vx, vy = +5, +5  # 爆弾の速度
     clock = pg.time.Clock()
     tmr = 0
-
     bb_imgs,bb_accs = init_bb_imgs()
-    
+
 
     while True:
         for event in pg.event.get():
