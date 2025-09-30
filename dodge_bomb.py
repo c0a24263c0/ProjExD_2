@@ -31,6 +31,10 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
 
 
 def gameover(screen: pg.Surface) -> None:
+    """
+    引数：スクリーンrct
+    衝突したら「game over」を5秒間表示
+    """
     go_img = pg.Surface((WIDTH,HEIGHT))  # 空のsurface
     pg.draw.rect(go_img, (0,0,0),(0,0,WIDTH,HEIGHT))  # 黒い短径を描画
     go_img.set_alpha(200)  # surfaceの透明度を設定
@@ -52,6 +56,8 @@ def gameover(screen: pg.Surface) -> None:
     screen.blit(go_kk_img,[650,290])
     pg.display.update()
     time.sleep(5)
+
+    return
 
 
 
